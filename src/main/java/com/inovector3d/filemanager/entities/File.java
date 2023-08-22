@@ -12,9 +12,10 @@ public class File {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String userEmail;
     private String fileName;
     private String realName;
-    private Float fileSize;
+    private Double fileSize;
     private String fileType;
     private Instant createdOn;
 
@@ -22,8 +23,9 @@ public class File {
     @JoinColumn(name="folder")
     private Folder folder;
 
-    public File(Long id, String fileName, String realName, Float fileSize, String fileType, Instant createdOn, Folder folder) {
+    public File(Long id, String userEmail,String fileName, String realName, Double fileSize, String fileType, Instant createdOn, Folder folder) {
         this.id = id;
+        this.userEmail = userEmail;
         this.fileName = fileName;
         this.realName = realName;
         this.fileSize = fileSize;
@@ -43,6 +45,14 @@ public class File {
         this.id = id;
     }
 
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+    }
+
     public String getFileName() {
         return fileName;
     }
@@ -59,11 +69,11 @@ public class File {
         this.realName = realName;
     }
 
-    public Float getFileSize() {
+    public Double getFileSize() {
         return fileSize;
     }
 
-    public void setFileSize(Float fileSize) {
+    public void setFileSize(Double fileSize) {
         this.fileSize = fileSize;
     }
 
