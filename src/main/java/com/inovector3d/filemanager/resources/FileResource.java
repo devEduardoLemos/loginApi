@@ -25,12 +25,20 @@ public class FileResource {
         return ResponseEntity.ok().body(list);
     }
 
+    //findByName
 
-    @GetMapping(value="/{userEmail}")
+    //createFile [insert]
+
+    //updateFile
+
+    //deleteFile
+
+
+   /* @GetMapping(value="/{userEmail}")
     public ResponseEntity<Page<FileDTO>> findAllByUserEmail(@PathVariable String userEmail, Pageable pageable){
         Page<FileDTO> list = fileService.findAllByUserEmail(userEmail, pageable);
         return ResponseEntity.ok().body(list);
-    }
+    }*/
 
  /*   @PostMapping
     public File insert(@RequestBody File file){

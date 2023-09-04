@@ -6,6 +6,7 @@ import com.inovector3d.filemanager.repositories.FileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,7 +16,8 @@ public class FileService {
     private FileRepository fileRepository;
 
     public Page<FileDTO> findAllPaged(Pageable pageable){
-        Page<File> list = fileRepository.findAll(pageable);
+        String userEmail =  (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Page<File> list = fileRepository.findAllByUserEmail(userEmail,pageable);
 
         return list.map(x-> new FileDTO(x));
     }
