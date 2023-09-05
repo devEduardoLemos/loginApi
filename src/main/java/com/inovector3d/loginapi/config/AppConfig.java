@@ -1,4 +1,4 @@
-package com.inovector3d.filemanager.config;
+package com.inovector3d.loginapi.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

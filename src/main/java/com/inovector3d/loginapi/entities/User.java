@@ -1,4 +1,4 @@
-package com.inovector3d.filemanager.entities;
+package com.inovector3d.loginapi.entities;
 
 import jakarta.persistence.*;
 

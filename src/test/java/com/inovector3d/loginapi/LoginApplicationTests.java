@@ -1,4 +1,4 @@
-package com.inovector3d.filemanager;
+package com.inovector3d.loginapi;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,23 +1,23 @@
-package com.inovector3d.filemanager.entities;
+package com.inovector3d.loginapi.dto;
 
-import jakarta.persistence.*;
+import com.inovector3d.loginapi.entities.Role;
 
-@Entity
-@Table(name="roles")
-public class Role {
+public class RoleDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String authority;
 
-    public Role(){
-
+    public RoleDTO(){
     }
 
-    public Role(Long id, String authority) {
+    public RoleDTO(Long id, String authority) {
         this.id = id;
         this.authority = authority;
+    }
+
+    public RoleDTO(Role role) {
+        this.id = role.getId();
+        this.authority = role.getAuthority();
     }
 
     public Long getId() {

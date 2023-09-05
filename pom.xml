@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.inovector3d</groupId>
-	<artifactId>filemanager</artifactId>
+	<artifactId>loginapi</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>filemanager</name>
 	<description>File manager for GoMaker3D</description>

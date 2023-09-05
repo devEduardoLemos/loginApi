@@ -1,4 +1,4 @@
-package com.inovector3d.filemanager;
+package com.inovector3d.loginapi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
