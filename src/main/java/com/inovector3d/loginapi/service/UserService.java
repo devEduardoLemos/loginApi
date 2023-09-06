@@ -8,10 +8,15 @@ import com.inovector3d.loginapi.entities.User;
 import com.inovector3d.loginapi.repositories.RoleRepository;
 import com.inovector3d.loginapi.repositories.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,7 +24,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
+
+    private static Logger logger = LoggerFactory.getLogger(UserService.class);
     @Autowired
     public UserRepository userRepository;
     @Autowired
@@ -62,6 +69,14 @@ public class UserService {
         }
     }
 
+    public void delete(Long id) {
+        try {
+            userRepository.deleteById(id);
+        }catch (EmptyResultDataAccessException exception){
+            throw new RuntimeException(exception);
+        }
+    }
+
     private void copyDtoToEntity(UserDTO dto, User entity) {
         entity.setFirstName(dto.getFirstName());
         entity.setLastName(dto.getLastName());
@@ -75,11 +90,14 @@ public class UserService {
         }
     }
 
-    public void delete(Long id) {
-        try {
-            userRepository.deleteById(id);
-        }catch (EmptyResultDataAccessException exception){
-            throw new RuntimeException(exception);
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.findByEmail(username);
+        if(user == null){
+            logger.error("User not Found"+username);
+            throw new UsernameNotFoundException("Email not found");
         }
+        logger.info("User found:"+username);
+        return user;
     }
 }

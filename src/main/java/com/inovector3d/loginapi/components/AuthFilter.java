@@ -27,12 +27,11 @@ public class AuthFilter extends OncePerRequestFilter {
         var token = this.recoverToken(request);
         if(token !=null){
         var user = authenticationService.validateToken(token);
-        List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+       List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
 
         var authentication = new UsernamePasswordAuthenticationToken(user,null, authorities);
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        /*System.out.println(user);*/
         }
         filterChain.doFilter(request,response);
     }
