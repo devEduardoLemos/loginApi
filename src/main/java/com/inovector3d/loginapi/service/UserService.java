@@ -74,7 +74,7 @@ public class UserService implements UserDetailsService {
         try {
             userRepository.deleteById(id);
         }catch (EmptyResultDataAccessException exception){
-            throw new NotFoundException("Unexpected. The server was not able to delete the user");
+            throw new NotFoundException("Unexpected. The server was not able to delete the user.");
         }
     }
 
@@ -96,7 +96,7 @@ public class UserService implements UserDetailsService {
         User user = userRepository.findByEmail(username);
         if(user == null){
             logger.error("User not Found"+username);
-            throw new UsernameNotFoundException("Email not found");
+            throw new UsernameNotFoundException("Email not found.");
         }
         logger.info("User found:"+username);
         return user;
