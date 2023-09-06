@@ -7,6 +7,7 @@ import com.inovector3d.loginapi.entities.Role;
 import com.inovector3d.loginapi.entities.User;
 import com.inovector3d.loginapi.repositories.RoleRepository;
 import com.inovector3d.loginapi.repositories.UserRepository;
+import com.inovector3d.loginapi.service.exceptions.NotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,7 +44,7 @@ public class UserService implements UserDetailsService {
 
     public UserDTO findById(Long id) {
         Optional<User> result = userRepository.findById(id);
-        User entity = result.orElseThrow(() -> new RuntimeException("Failed to find user"));
+        User entity = result.orElseThrow(() -> new NotFoundException("Failed to find user"));
 
         return new UserDTO(entity);
     }
@@ -65,7 +66,7 @@ public class UserService implements UserDetailsService {
             entity = userRepository.save(entity);
             return new UserDTO(entity);
         } catch (EntityNotFoundException exception) {
-            throw new RuntimeException(exception);
+            throw new NotFoundException("Unexpected. The server was not able to update the user.");
         }
     }
 
@@ -73,7 +74,7 @@ public class UserService implements UserDetailsService {
         try {
             userRepository.deleteById(id);
         }catch (EmptyResultDataAccessException exception){
-            throw new RuntimeException(exception);
+            throw new NotFoundException("Unexpected. The server was not able to delete the user");
         }
     }
 

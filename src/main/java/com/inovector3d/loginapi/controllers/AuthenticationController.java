@@ -23,9 +23,14 @@ public class AuthenticationController {
     @PostMapping(value="/login")
     public ResponseEntity<LoginResponseDTO> login(@RequestBody AuthenticationDTO dto){
         var usernamePassword = new UsernamePasswordAuthenticationToken(dto.getEmail(),dto.getPassword());
-        var auth = authenticationManager.authenticate(usernamePassword);
-        var token = authenticationService.generateToken((User) auth.getPrincipal());
-        return ResponseEntity.ok().body(token);
+        try {
+            var auth = authenticationManager.authenticate(usernamePassword);
+            var token = authenticationService.generateToken((User) auth.getPrincipal());
+            return ResponseEntity.ok().body(token);
+        }catch(Exception exception){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+
+        }
     }
 
 }
