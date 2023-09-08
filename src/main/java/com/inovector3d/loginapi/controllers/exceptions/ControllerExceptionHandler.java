@@ -5,6 +5,8 @@ import com.inovector3d.loginapi.service.exceptions.NotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import java.time.Instant;
@@ -33,6 +35,23 @@ public class ControllerExceptionHandler {
         err.setError("Unauthorized access");
         err.setMessage(exception.getMessage());
         err.setPath(request.getRequestURI());
+        return ResponseEntity.status(status).body(err);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ValidationError> validationError(MethodArgumentNotValidException exception, HttpServletRequest request){
+        HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
+        ValidationError err = new ValidationError();
+        err.setTimestamp(Instant.now());
+        err.setStatus(status.value());
+        err.setError("Validation exception");
+        err.setMessage(exception.getBindingResult().getFieldErrors().get(0).getDefaultMessage());
+        err.setPath(request.getRequestURI());
+
+        for(FieldError fieldError: exception.getBindingResult().getFieldErrors()){
+            err.addErrors(fieldError.getField(),fieldError.getDefaultMessage());
+        }
+
         return ResponseEntity.status(status).body(err);
     }
 }

@@ -1,6 +1,7 @@
 package com.inovector3d.loginapi.dto;
 
 import com.inovector3d.loginapi.entities.User;
+import jakarta.validation.constraints.*;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -8,10 +9,16 @@ import java.util.Set;
 public class UserDTO {
 
     private Long id;
+
+    @NotBlank(message = "Required field")
+    @Size(max = 30, message = "First name must not exceed {max} characters")
     private String firstName;
 
+    @NotBlank(message = "Required field")
+    @Size(max = 30, message = "First name must not exceed {max} characters")
     private String lastName;
 
+    @Email(message = "Insert a valid email address")
     private String email;
 
     private Set<RoleDTO> roles = new HashSet<>();
