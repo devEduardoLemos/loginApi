@@ -1,10 +1,13 @@
 package com.inovector3d.loginapi.controllers.exceptions;
 
-import com.inovector3d.loginapi.service.exceptions.AuthenticationException;
+import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.exceptions.TokenExpiredException;
+import com.inovector3d.loginapi.service.exceptions.UserAuthenticationException;
 import com.inovector3d.loginapi.service.exceptions.NotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -15,7 +18,7 @@ import java.time.Instant;
 public class ControllerExceptionHandler {
 
     @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<StandardError> entityNotFound(NotFoundException exception, HttpServletRequest request){
+    public ResponseEntity<StandardError> entityNotFound(NotFoundException exception, HttpServletRequest request) {
         HttpStatus status = HttpStatus.NOT_FOUND;
         StandardError err = new StandardError();
         err.setTimestamp(Instant.now());
@@ -26,8 +29,9 @@ public class ControllerExceptionHandler {
         return ResponseEntity.status(status).body(err);
     }
 
-    @ExceptionHandler(AuthenticationException.class)
-    public ResponseEntity<StandardError> authenticationError(AuthenticationException exception, HttpServletRequest request){
+    @ExceptionHandler(UserAuthenticationException.class)
+    public ResponseEntity<StandardError> authenticationError(UserAuthenticationException exception, HttpServletRequest request) {
+        System.out.println("Mas tá entrando aqui?");
         HttpStatus status = HttpStatus.UNAUTHORIZED;
         StandardError err = new StandardError();
         err.setTimestamp(Instant.now());
@@ -39,7 +43,7 @@ public class ControllerExceptionHandler {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ValidationError> validationError(MethodArgumentNotValidException exception, HttpServletRequest request){
+    public ResponseEntity<ValidationError> validationError(MethodArgumentNotValidException exception, HttpServletRequest request) {
         HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
         ValidationError err = new ValidationError();
         err.setTimestamp(Instant.now());
@@ -48,8 +52,8 @@ public class ControllerExceptionHandler {
         err.setMessage(exception.getBindingResult().getFieldErrors().get(0).getDefaultMessage());
         err.setPath(request.getRequestURI());
 
-        for(FieldError fieldError: exception.getBindingResult().getFieldErrors()){
-            err.addErrors(fieldError.getField(),fieldError.getDefaultMessage());
+        for (FieldError fieldError : exception.getBindingResult().getFieldErrors()) {
+            err.addErrors(fieldError.getField(), fieldError.getDefaultMessage());
         }
 
         return ResponseEntity.status(status).body(err);

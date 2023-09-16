@@ -4,9 +4,8 @@ import com.inovector3d.loginapi.dto.AuthenticationDTO;
 import com.inovector3d.loginapi.dto.LoginResponseDTO;
 import com.inovector3d.loginapi.entities.User;
 import com.inovector3d.loginapi.service.AuthenticationService;
-import com.inovector3d.loginapi.service.exceptions.AuthenticationException;
+import com.inovector3d.loginapi.service.exceptions.UserAuthenticationException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -29,7 +28,7 @@ public class AuthenticationController {
             var token = authenticationService.generateToken((User) auth.getPrincipal());
             return ResponseEntity.ok().body(token);
         }catch(Exception exception){
-            throw new AuthenticationException("User or password invalid.");
+            throw new UserAuthenticationException("User or password invalid.");
         }
     }
 

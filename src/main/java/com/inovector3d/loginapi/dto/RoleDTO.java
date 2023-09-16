@@ -2,7 +2,9 @@ package com.inovector3d.loginapi.dto;
 
 import com.inovector3d.loginapi.entities.Role;
 
-public class RoleDTO {
+import java.io.Serializable;
+
+public class RoleDTO implements Serializable {
 
     private Long id;
     private String authority;

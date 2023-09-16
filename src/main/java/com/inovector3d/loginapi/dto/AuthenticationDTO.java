@@ -1,6 +1,8 @@
 package com.inovector3d.loginapi.dto;
 
-public class AuthenticationDTO {
+import java.io.Serializable;
+
+public class AuthenticationDTO implements Serializable {
 
     private String email;
     private String password;

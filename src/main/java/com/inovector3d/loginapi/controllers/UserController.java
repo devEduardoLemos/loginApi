@@ -1,9 +1,11 @@
 package com.inovector3d.loginapi.controllers;
 
+import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.inovector3d.loginapi.dto.UserDTO;
 import com.inovector3d.loginapi.dto.UserInsertDTO;
 import com.inovector3d.loginapi.dto.UserUpdateDTO;
 import com.inovector3d.loginapi.service.UserService;
+import com.inovector3d.loginapi.service.exceptions.UserAuthenticationException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -24,7 +26,6 @@ public class UserController {
     @GetMapping
     public ResponseEntity<Page<UserDTO>> findAll(Pageable pageable){
         Page<UserDTO> list = service.findAllPaged(pageable);
-
         return ResponseEntity.ok().body(list);
     }
 

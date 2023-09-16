@@ -4,8 +4,10 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.inovector3d.loginapi.dto.LoginResponseDTO;
 import com.inovector3d.loginapi.entities.User;
+import com.inovector3d.loginapi.service.exceptions.UserAuthenticationException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -22,8 +24,7 @@ public class AuthenticationService {
     @Value("${api.security.token.issuer}")
     private String issuer;
 
-    public LoginResponseDTO generateToken(User user){
-        try {
+    public LoginResponseDTO generateToken(User user) throws JWTCreationException{
             Algorithm algorithm = Algorithm.HMAC256(secret);
             Instant expiresAt = generateExpirationData();
 
@@ -31,7 +32,7 @@ public class AuthenticationService {
                     + user.getFirstName() + ","
                     + user.getLastName() + ","
                     + user.getEmail() + ","
-                    + user.getAuthorities() + "," ;
+                    + user.getAuthorities() ;
 
             String token = JWT.create()
                     .withIssuer(issuer)
@@ -39,26 +40,18 @@ public class AuthenticationService {
                     .withExpiresAt(expiresAt)
                     .sign(algorithm);
             return new LoginResponseDTO(user,token,expiresAt);
-        }catch (JWTCreationException exception){
-            throw new RuntimeException("Error while generating toke", exception);
-        }
     }
 
-    public String validateToken(String token) {
-        try{
+    public String validateToken(String token) throws JWTVerificationException{
             Algorithm algorithm = Algorithm.HMAC256(secret);
             return JWT.require(algorithm)
-                    .withIssuer("auth-api")
+                    .withIssuer(issuer)
                     .build()
                     .verify(token)
                     .getSubject();
-        }catch (JWTVerificationException exception){
-            System.out.println("ERRO: " +exception);
-            return "";
-        }
     }
 
     private Instant generateExpirationData() {
-        return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.ofHours(-3));
+        return LocalDateTime.now().plusHours(1).toInstant(ZoneOffset.ofHours(-3));
     }
 }

@@ -3,10 +3,11 @@ package com.inovector3d.loginapi.dto;
 import com.inovector3d.loginapi.entities.User;
 import jakarta.validation.constraints.*;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-public class UserDTO {
+public class UserDTO implements Serializable {
 
     private Long id;
 
