@@ -1,6 +1,5 @@
 INSERT INTO users (first_name, last_name, email, password) VALUES ('Eduardo', 'Lemos','eduardo.lemos@inovector3d.com.br','')
 INSERT INTO users (first_name, last_name, email, password) VALUES ('Danilo', 'Ribeiro','danilo.ribeiro@inovector3d.com.br','')
-INSERT INTO users (first_name, last_name, email, password) VALUES ('Isabele', 'Almeida','isabele.almeida@inovector3d.com.br','')
 INSERT INTO users (first_name, last_name, email, password) VALUES ('Vinicius', 'Amorim','vinicius.amorim@inovector3d.com.br','')
 INSERT INTO users (first_name, last_name, email, password) VALUES ('Ewerton', 'Larry','ewerton.larry@inovector3d.com.br','')
 INSERT INTO users (first_name, last_name, email, password) VALUES ('Nutec', 'SergipeTec','nutec.sergipetec@gmail.com','')
