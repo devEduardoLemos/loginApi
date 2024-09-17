@@ -28,7 +28,6 @@ public class ControllerExceptionHandler {
 
     @ExceptionHandler(UserAuthenticationException.class)
     public ResponseEntity<StandardError> authenticationError(UserAuthenticationException exception, HttpServletRequest request) {
-        System.out.println("Mas tá entrando aqui?");
         HttpStatus status = HttpStatus.UNAUTHORIZED;
         StandardError err = new StandardError();
         err.setTimestamp(Instant.now());

@@ -1,10 +1,15 @@
 package com.skip.loginapi.dto;
 
+import jakarta.validation.constraints.NotBlank;
+
 import java.io.Serializable;
 
 public class AuthenticationDTO implements Serializable {
 
+    @NotBlank(message = "Email is mandatory")
     private String email;
+
+    @NotBlank(message = "Password is mandatory")
     private String password;
 
     public AuthenticationDTO(){
