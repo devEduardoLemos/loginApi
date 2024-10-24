@@ -1,15 +1,9 @@
-INSERT INTO users (first_name, last_name, email, password) VALUES ('Eduardo', 'Lemos','eduardo.lemos@gruposkip.com','$2a$10$e72V.bEJw1tUHhVmcBROIuQMBeHWXW4dBMXQawI2euMVJiPCWKUHG')
-INSERT INTO users (first_name, last_name, email, password) VALUES ('Lizandra', 'Lisboa','lizandra.lisboa@gruposkip.com','')
-INSERT INTO users (first_name, last_name, email, password) VALUES ('Thalles', 'Carvalho','thalles.carvalho@gruposkip.com','')
-INSERT INTO users (first_name, last_name, email, password) VALUES ('Vinicius', 'Amorim','vinicius.amorim@gruposkip.com','')
-INSERT INTO users (first_name, last_name, email, password) VALUES ('Danilo', 'Ribeiro','danilo.ribeiro@gruposkip.com','')
+INSERT INTO users (first_name, last_name, email, password) VALUES ('user1', 'user1','user1@user1.com','$2a$10$DbIzt.DijLEiP2LhPFcGIuU3rvti6DFEHwV9.vXthnzH039I/6cyC')
+
 
 INSERT INTO roles (authority) VALUES ('ROLE_SUPERADMIN')
 INSERT INTO roles (authority) VALUES ('ROLE_ADMIN')
 INSERT INTO roles (authority) VALUES ('ROLE_USER')
 
 INSERT INTO users_roles (user_id, role_id) VALUES (1, 1)
-INSERT INTO users_roles (user_id, role_id) VALUES (2, 2)
-INSERT INTO users_roles (user_id, role_id) VALUES (3, 2)
-INSERT INTO users_roles (user_id, role_id) VALUES (4, 3)
-INSERT INTO users_roles (user_id, role_id) VALUES (5, 3)
+
