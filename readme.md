@@ -33,14 +33,7 @@ Antes de começar, verifique se você atendeu aos seguintes requisitos:
 
 Para instalar o Login System, siga estas etapas:
 
-Linux e macOS:
-
-```
-<comando_de_instalação>
-```
-
-Windows:
-
+Windows, Linux e macOS:
 1. Clone o repositório
 ```
 git clone <url-do-repositorio>
@@ -58,10 +51,12 @@ DB_URL=YOUR_DB_URL_HERE
 DB_USER=YOUR_DB_USER_HERE
 DB_PWD=YOUR_DB_PASSWORD_HERE
 ```
-3. Na primeira vez que o sistema for rodado será necessário criar e popular a base de dados. Para isso configure o .properties:
+3. Na primeira execução, configure o Spring para criar e popular a base de dados. No arquivo application.properties, adicione:
 ```
 spring.jpa.hibernate.ddl-auto=create
 ```
-4. Use a IDE de sua preferência para rodar o código. Para este projeto, foi utilizada a [IntelliJ IDEA Community Edition](https://www.jetbrains.com/idea/download/).
-
-
+4. Use a IDE de sua preferência para rodar o código:
+   Para este projeto, foi utilizada a [IntelliJ IDEA Community Edition](https://www.jetbrains.com/idea/download/). Se preferir, também pode rodar diretamente pelo terminal:
+```
+mvn spring-boot:run
+```
