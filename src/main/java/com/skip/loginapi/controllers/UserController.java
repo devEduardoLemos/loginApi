@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -28,6 +29,7 @@ public class UserController {
     }
 
     @GetMapping(value = "/{id}")
+    @PreAuthorize("@userSecurity.isOwner(#id)")
     public ResponseEntity<UserDTO> findById(@PathVariable Long id){
         UserDTO dto = service.findById(id);
 
@@ -45,6 +47,7 @@ public class UserController {
     }
 
     @PutMapping(value = "/{id}")
+    @PreAuthorize("@userSecurity.isOwner(#id)")
     public ResponseEntity<UserDTO> update(@PathVariable Long id, @Valid @RequestBody UserUpdateDTO dto){
         UserDTO newDto = service.update(id,dto);
 

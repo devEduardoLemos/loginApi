@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -18,6 +19,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 public class SecurityConfig {
 
     @Autowired
@@ -33,7 +35,7 @@ public class SecurityConfig {
     private UserAuthenticationEntryPoint userAuthenticationEntryPoint;
 
     private static final String[] PUBLIC = {"/auth/login"};
-    private static final String[] UsersInfo = {"/users/**"};
+    private static final String[] UsersInfo = {"/users/{id}"};
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
@@ -42,8 +44,8 @@ public class SecurityConfig {
         http.sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         http.authorizeHttpRequests(auth->auth
                 .requestMatchers(PUBLIC).permitAll()
-                .requestMatchers(UsersInfo).hasRole("SUPERADMIN")
-                .anyRequest().authenticated()
+                .requestMatchers(UsersInfo).authenticated()
+                .anyRequest().hasRole("SUPERADMIN")
         );
 
         http.exceptionHandling(exceptionHandling->
