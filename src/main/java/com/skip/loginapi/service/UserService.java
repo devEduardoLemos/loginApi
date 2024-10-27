@@ -3,6 +3,7 @@ package com.skip.loginapi.service;
 import com.skip.loginapi.dto.RoleDTO;
 import com.skip.loginapi.dto.UserDTO;
 import com.skip.loginapi.dto.UserInsertDTO;
+import com.skip.loginapi.dto.UserUpdateDTO;
 import com.skip.loginapi.entities.Role;
 import com.skip.loginapi.entities.User;
 import com.skip.loginapi.repositories.RoleRepository;
@@ -59,10 +60,16 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    public UserDTO update(Long id, UserDTO dto) {
+    public UserDTO update(Long id, UserUpdateDTO dto) {
         try {
             User entity = userRepository.getOne(id);
             copyDtoToEntity(dto,entity);
+
+            //if provided update the password too
+            if(dto.getPassword() !=null && !dto.getPassword().isEmpty()){
+                entity.setPassword(passwordEncoder.encode(dto.getPassword()));
+            }
+
             entity = userRepository.save(entity);
             return new UserDTO(entity);
         } catch (EntityNotFoundException exception) {
@@ -82,7 +89,6 @@ public class UserService implements UserDetailsService {
         entity.setFirstName(dto.getFirstName());
         entity.setLastName(dto.getLastName());
         entity.setEmail(dto.getEmail());
-
 
         entity.getRoles().clear();
         for (RoleDTO roleDto : dto.getRoles()) {

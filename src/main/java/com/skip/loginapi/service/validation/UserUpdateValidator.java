@@ -34,8 +34,6 @@ public class UserUpdateValidator implements ConstraintValidator<UserUpdateValid,
         var uriVars = (Map<String, String>) request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
         long userId = Long.parseLong(uriVars.get("id"));
 
-        System.out.println(userId);
-
         List<FieldMessage> list = new ArrayList<>();
 
         User user = userRepository.findByEmail(dto.getEmail());
